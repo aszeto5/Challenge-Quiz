@@ -2,9 +2,16 @@ var username;
 var score = 0;
 
 var timer = 60;
-var realTimeEl = document.querySelector("#realTime");
+var realTimeEl = document.getElementById("realTime");
 
 //DIV elements
+var quizEl = document.getElementById("Quiz")
+var quizStart = document.getElementById("Start");
+var scoreEl = document.getElementById("Score");
+var userEl = document.getElementById("username");
+const progress = document.getElementById("progress");
+// const lastQuestion = questions.length - 1;
+let runningQuestion = 0;
 
 
 var questions = [
@@ -24,3 +31,52 @@ var questions = [
         answer: "Union City"
     },
 ];
+
+//Start Quiz
+// function displayQ() {
+//     document.getElementById("question")
+// };
+
+//Rendering Questions
+function renderQuestion() {
+    let q = questions[runningQuestion];
+    question.innerHTML = "<p>"+q.question +"</p>";
+    choiceA.innerHTML = q.choiceA;
+    choiceB.innerHTML = q.choiceB;
+    choiceC.innerHTML = q.choiceC;
+}
+
+//Render Progress
+function renderProgress() {
+    for(let qIndex = 0; qIndex <= questions.length; qIndex++){
+        progress.innerHTML += "<div class='prog' id="+ qIndex +"></div>"
+    }
+}
+
+//Display challenge questions
+function displayQ () {
+    document.getElementById("question").textContent = questions[runningQuestion].question;
+}
+
+//Answer
+function correctAns() {
+    var answerSelect = this.textContent;
+    var correctSelect = questions[index].answer;
+
+    if (answerSelect === correctSelect) {
+        runningQuestion = runningQuestion + 1;
+    }
+    else {
+        timer = timer - 3
+    }
+}
+
+if (question === runningQuestion){
+    alert("finish!")
+    endQuiz();
+}
+else {
+    displayQ();
+};
+
+Start.addEventListener("click", quizStart);

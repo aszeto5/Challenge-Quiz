@@ -15,14 +15,20 @@
     <div id="Quiz">
         <h1>The Breakin' Challenge Quiz</h1>
         <p id="abstract"> Do you have what it takes to know real bboyin'? See for yourself by answering the following questions iwthin the given time limit. If you fail to do so, go back and learn some real knowledge.
-            <button id="start">Let's Go!</button>
+            <button id="Start">Let's Go!</button>
         </p>
     </div>
-
-    <div id="score" styel="display: none;">
+    <div id="question"></div>
+    <div id="choices">
+        <div class="choice" id="A" onclick="checkAnswer('A')"></div>
+        <div class="choice" id="B" onclick="checkAnswer('B')"></div>
+        <div class="choice" id="C" onclick="checkAnswer('C')"></div>
+    </div>
+    <div id="progress"></div>
+    <div id="Score" style="display: none;">
         <h2>Finish!</h2>
         <label>Enter Your Name</label>
-        <input type="text" id="userName" placeholder="Name" />
+        <input type="text" id="username" placeholder="Name" />
         <button id="submit">Submit</button>
     </div>
 
