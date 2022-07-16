@@ -83,6 +83,13 @@ function renderDisplay() {
         var userChoices = questions[questionIndex].choices;
         questionsDiv.textContent = userQuestion;
     }
+    userChoices.forEach(function (newItem) {
+        var listItem = document.createElement("li");
+        listItem.textContent = newItem;
+        questionsDiv.appendChild(ulCreate);
+        ulCreate.appendChild(listItem);
+        listItem.addEventListener("click", (compare));
+    })
 };
 
 function compare(event) {
