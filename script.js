@@ -11,6 +11,8 @@ var scoreEl = document.getElementById("Score");
 var scoreSub = document.getElementById("submit");
 var userEl = document.getElementById("username");
 const progress = document.getElementById("progress");
+var quizQuestionEl = document.getElementById("quiz-question");
+var choicesEl = document.querySelectorAll("answerChoice");
 // const lastQuestion = questions.length - 1;
 let runningQuestion = 0;
 
@@ -33,37 +35,73 @@ var questions = [
     },
 ];
 
-//Start Quiz
-// function displayQ() {
-//     document.getElementById("question")
-// };
+// Start Quiz
+function startQuiz() {
+    renderDisplay();
+    TIMER = setInterval(renderCounter,60);
+};
+
+// function renderCounter(){
+//     if(count <= questionTime){
+//         counter.innerHTML = count;
+//         timeGauge.style.width = count * gaugeUnit + "px";
+//         count++
+//     }else{
+//         count = 0;
+//         // change progress color to red
+//         answerIsWrong();
+//         if(runningQuestion < lastQuestion){
+//             runningQuestion++;
+//             renderQuestion();
+//         }else{
+//             // end the quiz and show the score
+//             clearInterval(TIMER);
+//             scoreRender();
+//         }
+//     }
+// }
 
 //Rendering Questions
-function renderQuestion() {
-    let q = questions[runningQuestion];
-    question.innerHTML = "<p>"+q.question +"</p>";
-    choiceA.innerHTML = q.choiceA;
-    choiceB.innerHTML = q.choiceB;
-    choiceC.innerHTML = q.choiceC;
-}
+// function renderQuestion() {
+//     let q = questions[runningQuestion];
+//     question.innerHTML = "<p>"+q.question +"</p>";
+//     choiceA.innerHTML = q.choiceA;
+//     choiceB.innerHTML = q.choiceB;
+//     choiceC.innerHTML = q.choiceC;
+// }
 
-//Render Progress
-function renderProgress() {
-    for(let qIndex = 0; qIndex <= questions.length; qIndex++){
-        progress.innerHTML += "<div class='prog' id="+ qIndex +"></div>"
+// //Progress
+// for (var indexQ = 0; indexQ <= lastQuestion; i++) {
+//     progress.innerHTML += "<div class='prog' id="+ qIndex +"></div>";
+// }
+
+//Render and Display
+function renderDisplay() {
+    quizEl.textContent = questions[runningQuestion].question;
+
+    for (var i = 0; i < choicesEl.length; i++){
+        var userChoices = questions[questionIndex].choices;
+        questionsDiv.textContent = userQuestion;
+    }
+};
+
+function compare(event) {
+    var element = event.target;
+    if (element.matches("li")){
+
     }
 }
 
 //Display challenge questions
-function displayQ () {
-    document.getElementById("question").textContent = questions[runningQuestion].question;
-    renderProgress();
-}
+// function displayQ () {
+//     //document.getElementById("questions").textContent = questions[runningQuestion].question;
+//     renderDisplay();
+// }
 
 //Answer
 function correctAns() {
     var answerSelect = this.textContent;
-    var correctSelect = questions[index].answer;
+    var correctSelect = questions[runningQuestion].answer;
 
     if (answerSelect === correctSelect) {
         runningQuestion = runningQuestion + 1;
@@ -73,13 +111,28 @@ function correctAns() {
     }
 }
 
-if (question === runningQuestion){
-    alert("finish!")
-    endQuiz();
+//Timer
+function clock() {
+    Clock = setInterval(function() {
+        if (timer > 1) {
+            realTimeEl = timer + 'seconds remaining';
+            timer--;
+        } else if (timer === 1) {
+            realTimeEl = timer + ' second remaining';
+        } else {
+            realTimeEl.textContent = '';
+            quizFinish()
+        }
+    }, 1000);
 }
-else {
-    displayQ();
-};
 
-quizStart.addEventListener("click", displayQ);
+// if (question === runningQuestion){
+//     alert("finish!")
+//     endQuiz();
+// }
+// else {
+//     displayQ();
+// };
+
+quizStart.addEventListener("click", renderDisplay);
 // scoreSub.addEventListener('click', saveScore);

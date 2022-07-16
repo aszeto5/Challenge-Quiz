@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+header {
+    display: flex;
+    border: 3px solid red;
+}
+p {
+    border: 3px solid green;
+}
+
+#Quiz{
+    width:500px;
+    height : 125px;
+    position: absolute;
+}
+#Quiz p{
+    margin : 0;
+    padding : 15px;
+    font-size: 1.25em;
+}
+#choices{
+    width : 480px;
+    position: absolute;
+    top : 125px;
+    padding : 10px
+}
+.answerChoice{
+    display: inline-block;
+    width : 135px;
+    text-align: center;
+    border : 1px solid grey;
+    border-radius: 5px;
+    cursor: pointer;
+    padding : 5px;
+    text-decoration: aqua;
+}
