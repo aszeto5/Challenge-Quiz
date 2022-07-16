@@ -8,6 +8,7 @@ var realTimeEl = document.getElementById("realTime");
 var quizEl = document.getElementById("Quiz")
 var quizStart = document.getElementById("Start");
 var scoreEl = document.getElementById("Score");
+var scoreSub = document.getElementById("submit");
 var userEl = document.getElementById("username");
 const progress = document.getElementById("progress");
 // const lastQuestion = questions.length - 1;
@@ -56,6 +57,7 @@ function renderProgress() {
 //Display challenge questions
 function displayQ () {
     document.getElementById("question").textContent = questions[runningQuestion].question;
+    renderProgress();
 }
 
 //Answer
@@ -79,4 +81,5 @@ else {
     displayQ();
 };
 
-Start.addEventListener("click", quizStart);
+quizStart.addEventListener("click", displayQ);
+// scoreSub.addEventListener('click', saveScore);
