@@ -10,19 +10,27 @@
 <body>
     <header>
         <a href="./high-scores.html" class="high-scores">High Scores</a>
-        <span id="realTime"></span>
+        <span id="realTime">60 seconds left</span>
     </header>
     <div id="Quiz">
         <h1>The Breakin' Challenge Quiz</h1>
-        <p id="abstract"> Do you have what it takes to know real bboyin'? See for yourself by answering the following questions iwthin the given time limit. If you fail to do so, go back and learn some real knowledge.
+        <p id="abstract"> Do you have what it takes to know real bboyin'? See for yourself by answering the following questions wthin the given time limit. If you fail to do so, go back and learn some real knowledge.
             <button id="Start">Let's Go!</button>
         </p>
     </div>
-    <div id="quiz-question" style="display: none;">
-        <div id="choices"></div>
-        <div class="answerChoice" id="A" onclick="checkAnswer('A')">Choice A</div>
-        <div class="answerChoice" id="B" onclick="checkAnswer('B')">Choice B</div>
-        <div class="answerChoice" id="C" onclick="checkAnswer('C')">Choice C</div>
+    <div id="Challenge" style="display: none;">
+        <div id="question"></div>
+            <div id="choices">
+                <div class="answerChoice">Choice A</div>
+                <div class="answerChoice">Choice B</div>
+                <div class="answerChoice">Choice C</div>
+                <div class="answerChoice">Choice D</div>
+            </div>
+        <div id="realTime">
+            <div id="counter"></div>
+            <div id="bgauge"></div>
+            <div id="gauge"></div> 
+        </div>
     </div>
     <div id="progress"></div>
     <div id="Score" style="display: none;">
@@ -32,7 +40,7 @@
         <button id="submit">Submit</button>
     </div>
 
-    <script src="./script.js"></script>
+    <script src="./script1.js"></script>
 </body>
 
 </html>

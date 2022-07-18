@@ -13,6 +13,11 @@ var userEl = document.getElementById("username");
 const progress = document.getElementById("progress");
 var quizQuestionEl = document.getElementById("quiz-question");
 var choicesEl = document.querySelectorAll("answerChoice");
+const choiceA = document.getElementById("A");
+const choiceB = document.getElementById("B");
+const choiceC = document.getElementById("C");
+const choiceD = document.getElementById("D");
+const counter = document.getElementById("guage");
 // const lastQuestion = questions.length - 1;
 let runningQuestion = 0;
 
@@ -20,17 +25,26 @@ let runningQuestion = 0;
 var questions = [
     {
         question: "Who is the current best korean bboy powermover?",
-        choices: ["Bboy Kill", "Bboy the End", "Bboy Shigekix", "Bboy Vero"],
+        choiceA: "Bboy Kill",
+        choiceB: "Bboy the End",
+        choiceC: "Bboy Shigekix",
+        choiceD: "Bboy Vero",
         answer: "Bboy the End"
     },
     {
         question: "Who won the 2011 RedBull BC One World Finals?",
-        choices: ["Bboy Taisuke", "Bboy Hong10", "Bboy Roxrite", "Bboy Yan the Shrimp"],
+        choiceA: "Bboy Taisuke",
+        choiceB: "Bboy Hong10",
+        choiceC: "Bboy Roxrite",
+        choiceD: "Bboy Yan the Shrimp",
         answer: "Bboy Roxrite"
     },
     {
         question: "Where is the RockForce crew originally founded?",
-        choices: ["Union City", "Oakland", "San Francisco", "South San Francisco"],
+        choiceA: "Union City",
+        choiceB: "Oakland",
+        choiceC: "San Francisco",
+        choiceD: " South San Francisco",
         answer: "Union City"
     },
 ];
@@ -61,35 +75,33 @@ function startQuiz() {
 //     }
 // }
 
-//Rendering Questions
-// function renderQuestion() {
-//     let q = questions[runningQuestion];
-//     question.innerHTML = "<p>"+q.question +"</p>";
-//     choiceA.innerHTML = q.choiceA;
-//     choiceB.innerHTML = q.choiceB;
-//     choiceC.innerHTML = q.choiceC;
-// }
+// Rendering Questions
+function renderQuestion() {
+    let q = questions[runningQuestion];
+    question.innerHTML = "<p>"+q.question +"</p>";
+    choiceA.innerHTML = q.choiceA;
+    choiceB.innerHTML = q.choiceB;
+    choiceC.innerHTML = q.choiceC;
+    choiceD.innerHTML = q.choiceD;
+}
 
-// //Progress
-// for (var indexQ = 0; indexQ <= lastQuestion; i++) {
-//     progress.innerHTML += "<div class='prog' id="+ qIndex +"></div>";
-// }
+//Render Progress
+function Progressrender() {
+    for(let qIndex = 0; qIndex <= runningQuestion.length-1; qIndex++){
+        progress.innerHTML += "<div class='prog' id=" + qIndex +"></div>";
+    }
+}
 
 //Render and Display
 function renderDisplay() {
     quizEl.textContent = questions[runningQuestion].question;
 
     for (var i = 0; i < choicesEl.length; i++){
-        var userChoices = questions[questionIndex].choices;
+        choicesEl[i].textContent = questions[questionIndex].choices[i];
+        choicesEl[i].addEventListener('click', correctAns);
         questionsDiv.textContent = userQuestion;
     }
-    userChoices.forEach(function (newItem) {
-        var listItem = document.createElement("li");
-        listItem.textContent = newItem;
-        questionsDiv.appendChild(ulCreate);
-        ulCreate.appendChild(listItem);
-        listItem.addEventListener("click", (compare));
-    })
+    
 };
 
 function compare(event) {

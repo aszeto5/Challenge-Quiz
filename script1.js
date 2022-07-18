@@ -1,156 +1,134 @@
-// select all elements
-const start = document.getElementById("start");
-const quiz = document.getElementById("quiz");
-const question = document.getElementById("question");
-const qImg = document.getElementById("qImg");
-const choiceA = document.getElementById("A");
-const choiceB = document.getElementById("B");
-const choiceC = document.getElementById("C");
-const counter = document.getElementById("counter");
-const timeGauge = document.getElementById("timeGauge");
-const progress = document.getElementById("progress");
-const scoreDiv = document.getElementById("scoreContainer");
+var username;
+var countdown = 60;
+var score = 0;
 
-// create our questions
-let questions = [
+//DOM elements
+var introDisplay = document.querySelector("#Quiz");
+var quizQuestions = document.querySelector("#Challenge");
+var scoreEntry = document.querySelector("Score");
+var timer = document.getElementById("realTime");
+var choicesEl = document.querySelectorAll(".answerChoice");
+
+// var choiceA = document.querySelector("A");
+// var choiceB = document.querySelector("B");
+// var choiceC = document.querySelector("C");
+// var choiceD = document.querySelector("D");
+var startQ = document.getElementById("Start");
+var submitBtn = document.getElementById("submit");
+
+//Questions
+var index = 0 
+var amtTime;
+var challengeQuestions = [
     {
-        question : "What does HTML stand for?",
-        imgSrc : "img/html.png",
-        choiceA : "Correct",
-        choiceB : "Wrong",
-        choiceC : "Wrong",
-        correct : "A"
-    },{
-        question : "What does CSS stand for?",
-        imgSrc : "img/css.png",
-        choiceA : "Wrong",
-        choiceB : "Correct",
-        choiceC : "Wrong",
-        correct : "B"
-    },{
-        question : "What does JS stand for?",
-        imgSrc : "img/js.png",
-        choiceA : "Wrong",
-        choiceB : "Wrong",
-        choiceC : "Correct",
-        correct : "C"
-    }
+        question: "Who is the current best korean bboy powermover?",
+        choices: ["Bboy Kill", "Bboy the End", "Bboy Shigekix", "Bboy Vero"],
+        // choiceA: "Bboy Kill",
+        // choiceB: "Bboy the End",
+        // choiceC: "Bboy Shigekix",
+        // choiceD: "Bboy Vero",
+        answer: "Bboy the End"
+    },
+    {
+        question: "Who won the 2011 RedBull BC One World Finals?",
+        choices: ["Bboy Taisuke", "Bboy Hong10", "Bboy Roxrite", "Bboy Yan the Shrimp"],
+        // choiceA: "Bboy Taisuke",
+        // choiceB: "Bboy Hong10",
+        // choiceC: "Bboy Roxrite",
+        // choiceD: "Bboy Yan the Shrimp",
+        answer: "Bboy Roxrite"
+    },
+    {
+        question: "Where is the RockForce crew originally founded?",
+        choices: ["Union City", "Oakland", "San Francisco", "South San Francisco"],
+        // choiceA: "Union City",
+        // choiceB: "Oakland",
+        // choiceC: "San Francisco",
+        // choiceD: " South San Francisco",
+        answer: "Union City"
+    },
 ];
 
-// create some variables
+//History
+var scoreHistory = JSON.parse(localStorage.getItem("scoreHistory"));
+if (scoreHistory === null) {
+    scoreHistory = [];
+};
 
-const lastQuestion = questions.length - 1;
-let runningQuestion = 0;
-let count = 0;
-const questionTime = 10; // 10s
-const gaugeWidth = 150; // 150px
-const gaugeUnit = gaugeWidth / questionTime;
-let TIMER;
-let score = 0;
-
-// render a question
-function renderQuestion(){
-    let q = questions[runningQuestion];
-    
-    question.innerHTML = "<p>"+ q.question +"</p>";
-    qImg.innerHTML = "<img src="+ q.imgSrc +">";
-    choiceA.innerHTML = q.choiceA;
-    choiceB.innerHTML = q.choiceB;
-    choiceC.innerHTML = q.choiceC;
+// Start Quiz
+function Start() {
+    introDisplay.style.display = "none";
+    quizQuestions.style.display = "block";
+    displayChallenge();
+    count();
 }
 
-start.addEventListener("click",startQuiz);
-
-// start quiz
-function startQuiz(){
-    start.style.display = "none";
-    renderQuestion();
-    quiz.style.display = "block";
-    renderProgress();
-    renderCounter();
-    TIMER = setInterval(renderCounter,1000); // 1000ms = 1s
-}
-
-// render progress
-function renderProgress(){
-    for(let qIndex = 0; qIndex <= lastQuestion; qIndex++){
-        progress.innerHTML += "<div class='prog' id="+ qIndex +"></div>";
+//Display Quiz
+function displayChallenge() {
+    document.getElementById("question").textContent = challengeQuestions[index].question;
+    for (var i=0; i < choicesEl.length; i++){
+        choicesEl[i].textContent = challengeQuestions[index].choices[i];
+        choicesEl[i].addEventListener('click', Answer);
     }
 }
 
-// counter render
+function Answer() {
+    var click = this.textContent;
+    var correctSelect = challengeQuestions[index].answer;
 
-function renderCounter(){
-    if(count <= questionTime){
-        counter.innerHTML = count;
-        timeGauge.style.width = count * gaugeUnit + "px";
-        count++
-    }else{
-        count = 0;
-        // change progress color to red
-        answerIsWrong();
-        if(runningQuestion < lastQuestion){
-            runningQuestion++;
-            renderQuestion();
-        }else{
-            // end the quiz and show the score
-            clearInterval(TIMER);
-            scoreRender();
+    //compare answer
+    if (click === correctSelect) {
+
+    } else {
+        countdown = countdown - 3;
+        //real time
+        timer.textContent = countdown + "seconds left";
+    }
+
+    //Next Question
+    index = index + 10;
+    if (challengeQuestions.length === index) {
+        alert("Finish!");
+        owari();
+    } else {
+        displayChallenge();
+    }
+}
+
+//End Quiz
+function owari() {
+    clearInterval(amtTime);
+    challengeQuestions.style.display = "none";
+    scoreEntry.style.display = "block";
+}
+
+//Save Run
+function saveEntry() {
+    var player = document.getElementById("username").value;
+    var playerCard = {
+        name: username,
+        score: countdown
+    }
+}
+
+//Timer
+function count() {
+    amtTime = setInterval(function() {
+        if (countdown > 1) {
+            timer.textContent = countdown + ' seconds remaining';
+            countdown--;
         }
-    }
+        else if (countdown === 1) {
+            timer.textContent = countdown + ' second remaining';
+            countdown--;
+        }
+        else {
+            timer.textContent = '';
+            owari()
+        }
+    }, 1000);
 }
 
-// checkAnwer
-
-function checkAnswer(answer){
-    if( answer == questions[runningQuestion].correct){
-        // answer is correct
-        score++;
-        // change progress color to green
-        answerIsCorrect();
-    }else{
-        // answer is wrong
-        // change progress color to red
-        answerIsWrong();
-    }
-    count = 0;
-    if(runningQuestion < lastQuestion){
-        runningQuestion++;
-        renderQuestion();
-    }else{
-        // end the quiz and show the score
-        clearInterval(TIMER);
-        scoreRender();
-    }
-}
-
-// answer is correct
-function answerIsCorrect(){
-    document.getElementById(runningQuestion).style.backgroundColor = "#0f0";
-}
-
-// answer is Wrong
-function answerIsWrong(){
-    document.getElementById(runningQuestion).style.backgroundColor = "#f00";
-}
-
-// score render
-function scoreRender(){
-    scoreDiv.style.display = "block";
-    
-    // calculate the amount of question percent answered by the user
-    const scorePerCent = Math.round(100 * score/questions.length);
-    
-    // choose the image based on the scorePerCent
-    let img = (scorePerCent >= 80) ? "img/5.png" :
-              (scorePerCent >= 60) ? "img/4.png" :
-              (scorePerCent >= 40) ? "img/3.png" :
-              (scorePerCent >= 20) ? "img/2.png" :
-              "img/1.png";
-    
-    scoreDiv.innerHTML = "<img src="+ img +">";
-    scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
-}
-
-
-start.addEventListener("click",startQuiz);
+//Buttons
+startQ.addEventListener('click', Start);
+submitBtn.addEventListener('click', saveEntry);
