@@ -107,8 +107,14 @@ function saveEntry() {
     var player = document.getElementById("username").value;
     var playerCard = {
         name: username,
-        score: countdown
+        score: countdown,
     }
+
+    scoreboard.push(playerCard)
+    localStorage.setItem("scoreSet", JSON.stringify(scoreboard));
+
+    //Scoreboard redirect
+    window.location.href = "high-scores.html";
 }
 
 //Timer
