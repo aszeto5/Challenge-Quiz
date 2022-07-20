@@ -8,6 +8,7 @@ var quizQuestions = document.querySelector("#Challenge");
 var scoreEntry = document.querySelector("Score");
 var timer = document.getElementById("realTime");
 var choicesEl = document.querySelectorAll(".answerChoice");
+var qDiv = document.getElementById("question");
 
 // var choiceA = document.querySelector("A");
 // var choiceB = document.querySelector("B");
@@ -65,7 +66,7 @@ function Start() {
 
 //Display Quiz
 function displayChallenge() {
-    document.getElementById("question").textContent = challengeQuestions[index].question;
+    qDiv.textContent = challengeQuestions[index].question;
     for (var i=0; i < choicesEl.length; i++){
         choicesEl[i].textContent = challengeQuestions[index].choices[i];
         choicesEl[i].addEventListener('click', Answer);
@@ -78,15 +79,13 @@ function Answer() {
 
     //compare answer
     if (click === correctSelect) {
-
+        index = index + 1;
     } else {
         countdown = countdown - 3;
         //real time
         timer.textContent = countdown + "seconds left";
     }
 
-    //Next Question
-    index = index + 10;
     if (challengeQuestions.length === index) {
         alert("Finish!");
         owari();
@@ -98,7 +97,7 @@ function Answer() {
 //End Quiz
 function owari() {
     clearInterval(amtTime);
-    challengeQuestions.style.display = "none";
+    choicesEl.style.display = "none";
     scoreEntry.style.display = "block";
 }
 
@@ -106,7 +105,7 @@ function owari() {
 function saveEntry() {
     var player = document.getElementById("username").value;
     var playerCard = {
-        name: username,
+        name: player,
         score: countdown,
     }
 
