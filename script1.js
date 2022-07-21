@@ -51,7 +51,7 @@ var challengeQuestions = [
 ];
 
 //History
-var scoreHistory = JSON.parse(localStorage.getItem("scoreHistory"));
+var scoreHistory = JSON.parse(localStorage.getItem("scoreSet"));
 if (scoreHistory === null) {
     scoreHistory = [];
 };
@@ -97,8 +97,8 @@ function Answer() {
 //End Quiz
 function owari() {
     clearInterval(amtTime);
-    choicesEl.style.display = "none";
-    scoreEntry.style.display = "block";
+    document.getElementById("choices").style.display = "none";
+    document.getElementById("Score").style.display = "block";
 }
 
 //Save Run
@@ -108,9 +108,9 @@ function saveEntry() {
         name: player,
         score: countdown,
     }
-
-    scoreboard.push(playerCard)
-    localStorage.setItem("scoreSet", JSON.stringify(scoreboard));
+// Add player card
+    scoreHistory.push(playerCard)
+    localStorage.setItem("scoreSet", JSON.stringify(scoreHistory));
 
     //Scoreboard redirect
     window.location.href = "high-scores.html";
